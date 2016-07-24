@@ -19,14 +19,11 @@ func GenerateAuthCode(sharedSecret string, timer func() uint64) (string, error) 
 		return "", ErrInvalidSharedSecret
 	}
 
-	var t uint64
-	if timer != nil {
-		t = timer()
-	} else {
-		t = CurrentTime()
+	if timer == nil {
+		timer = CurrentTime
 	}
 
-	return generateAuthCode(key, t), nil
+	return generateAuthCode(key, timer()), nil
 }
 
 var (

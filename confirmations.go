@@ -26,14 +26,11 @@ func GenerateAcceptTradeCode(identitySecret string, timer func() uint64) (string
 		return "", ErrInvalidIdentitySecret
 	}
 
-	var t uint64
-	if timer != nil {
-		t = timer()
-	} else {
-		t = CurrentTime()
+	if timer == nil {
+		timer = CurrentTime
 	}
 
-	return generateConfirmation(acceptTradeTag, key, t), nil
+	return generateConfirmation(acceptTradeTag, key, timer()), nil
 }
 
 // GenerateCancelCode generate and returns base64 encoded code for canceling
@@ -47,14 +44,11 @@ func GenerateCancelCode(identitySecret string, timer func() uint64) (string, err
 		return "", ErrInvalidIdentitySecret
 	}
 
-	var t uint64
-	if timer != nil {
-		t = timer()
-	} else {
-		t = CurrentTime()
+	if timer == nil {
+		timer = CurrentTime
 	}
 
-	return generateConfirmation(cancelTag, key, t), nil
+	return generateConfirmation(cancelTag, key, timer()), nil
 }
 
 // GenerateLoadConfirmationCode generate and returns base64 encoded code for
@@ -68,14 +62,11 @@ func GenerateLoadConfirmationCode(identitySecret string, timer func() uint64) (s
 		return "", ErrInvalidIdentitySecret
 	}
 
-	var t uint64
-	if timer != nil {
-		t = timer()
-	} else {
-		t = CurrentTime()
+	if timer == nil {
+		timer = CurrentTime
 	}
 
-	return generateConfirmation(loadConfirmationTag, key, t), nil
+	return generateConfirmation(loadConfirmationTag, key, timer()), nil
 }
 
 // GenerateTradeInfoCode generate and returns base64 encoded code for loading
@@ -89,14 +80,11 @@ func GenerateTradeInfoCode(identitySecret string, timer func() uint64) (string, 
 		return "", ErrInvalidIdentitySecret
 	}
 
-	var t uint64
-	if timer != nil {
-		t = timer()
-	} else {
-		t = CurrentTime()
+	if timer == nil {
+		timer = CurrentTime
 	}
 
-	return generateConfirmation(tradeInfoTag, key, t), nil
+	return generateConfirmation(tradeInfoTag, key, timer()), nil
 }
 
 // generateConfirmation generate and returns base64 confirmation code.
